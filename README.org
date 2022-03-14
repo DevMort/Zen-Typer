@@ -1,0 +1,7 @@
+* Zen Typer
+
+** Why I Made It
+As of typing this, I am in the process of learning a new keyboard layout (colemak). And I need a helper program that I can just mindlessly type away while some of my focus is on another thing (like a movie or something).
+
+** Status
+Just started.
