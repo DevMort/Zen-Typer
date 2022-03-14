@@ -1,5 +1,6 @@
 use rand::{thread_rng, Rng};
 use std::fs::read_to_string;
+use bevy::prelude::*;
 
 pub struct Words(Vec<String>);
 impl Words {
@@ -21,5 +22,12 @@ impl Words {
 		let mut rng = thread_rng();
 
 		self.0.get(rng.gen_range(0..self.0.len())).unwrap().to_string()
+	}
+}
+
+pub struct WordPlugin;
+impl Plugin for WordPlugin {
+	fn build(&self, app: &mut App) {
+		//
 	}
 }

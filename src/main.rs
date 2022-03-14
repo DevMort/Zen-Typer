@@ -1,21 +1,23 @@
 mod words;
+mod program;
 
-use words::Words;
-
-// use bevy::prelude::*;
+use bevy::prelude::*;
+use program::ProgramPlugin;
+use crate::words::{Words, WordPlugin};
 
 fn main() {
     let words = Words::new();
-	println!("{}", words.get_new_word());
 
-    // App::new()
-    // 	.insert_resource(WindowDescriptor {
-    // 		title: "Zen Typer".to_string(),
-    // 		mode: bevy::window::WindowMode::Fullscreen,
-    // 		vsync: true,
-    // 		resizable: false,
-    // 		..Default::default()
-    // 	})
-    // 	.add_plugins(DefaultPlugins)
-    // 	.run();
+    App::new()
+    	.insert_resource(WindowDescriptor {
+    		title: "Zen Typer".to_string(),
+    		mode: bevy::window::WindowMode::Fullscreen,
+    		vsync: true,
+    		resizable: false,
+    		..Default::default()
+    	})
+		.add_plugin(ProgramPlugin)
+		.add_plugin(WordPlugin)
+    	.add_plugins(DefaultPlugins)
+    	.run();
 }
