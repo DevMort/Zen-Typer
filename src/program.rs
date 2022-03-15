@@ -3,9 +3,11 @@ use bevy::prelude::*;
 const FONT_PATH: &str = "font.otf";
 
 #[derive(Component)]
-struct FgText;
+pub struct FgText;
 #[derive(Component)]
 struct BgText;
+
+pub struct CurrentKey(pub Option<char>);
 
 fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(UiCameraBundle::default());
@@ -32,7 +34,11 @@ fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
                 .spawn_bundle(TextBundle {
                     style: Style {
                         justify_content: JustifyContent::Center,
-                        align_self: AlignSelf::Center,
+                        align_self: AlignSelf::FlexEnd,
+                        margin: Rect {
+                            top: Val::Percent(20.0),
+                            ..Default::default()
+                        },
                         ..Default::default()
                     },
                     text: Text::with_section(
@@ -40,10 +46,10 @@ fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
                         TextStyle {
                             font,
                             font_size: 64.0,
-                            color: Color::GRAY,
+                            color: Color::SEA_GREEN,
                         },
                         TextAlignment {
-                            vertical: VerticalAlign::Center,
+                            vertical: VerticalAlign::Top,
                             horizontal: HorizontalAlign::Center,
                         },
                     ),
@@ -95,11 +101,26 @@ fn setup_fg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
         });
 }
 
+fn handle_char(current_char: Res<CurrentKey>, mut q_fgtext: Query<&mut Text, With<FgText>>) {
+    if current_char.is_changed() {
+        let mut fgtext = q_fgtext.get_single_mut().unwrap();
+        if current_char.0.is_some() {
+            if current_char.0.unwrap() == ' ' {
+                // TODO
+            }
+
+            fgtext.sections[0].value.push(current_char.0.unwrap());
+        }
+    }
+}
+
 pub struct ProgramPlugin;
 impl Plugin for ProgramPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(setup_camera)
+        app.insert_resource(CurrentKey(None))
+            .add_startup_system(setup_camera)
             .add_startup_system(setup_bg_text)
-            .add_startup_system(setup_fg_text);
+            .add_startup_system(setup_fg_text)
+            .add_system(handle_char);
     }
 }
