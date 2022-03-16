@@ -1,5 +1,7 @@
 use bevy::prelude::*;
 
+use crate::words::Words;
+
 const FONT_PATH: &str = "font.otf";
 
 #[derive(Component)]
@@ -13,7 +15,7 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn_bundle(UiCameraBundle::default());
 }
 
-fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>, words: Res<Words>) {
     let font = asset_server.load(FONT_PATH);
 
     commands
@@ -42,7 +44,7 @@ fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
                         ..Default::default()
                     },
                     text: Text::with_section(
-                        "Placeholder".to_string(),
+                        words.get_new_word(),
                         TextStyle {
                             font,
                             font_size: 64.0,
@@ -101,14 +103,23 @@ fn setup_fg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
         });
 }
 
-fn handle_char(current_char: Res<CurrentKey>, mut q_fgtext: Query<&mut Text, With<FgText>>) {
-    if current_char.is_changed() {
-        let mut fgtext = q_fgtext.get_single_mut().unwrap();
-        if current_char.0.is_some() {
-            if current_char.0.unwrap() == ' ' {
-                // TODO
-            }
+fn handle_char(
+    current_char: Res<CurrentKey>,
+    mut q_fgtext: Query<&mut Text, With<FgText>>,
+    mut q_bgtext: Query<&mut Text, (With<BgText>, Without<FgText>)>,
+    words: Res<Words>,
+) {
+    let mut fgtext = q_fgtext.get_single_mut().unwrap();
+    let mut bgtext = q_bgtext.get_single_mut().unwrap();
 
+    if fgtext.sections[0].value == bgtext.sections[0].value {
+        fgtext.sections[0].value = String::from("");
+        bgtext.sections[0].value = words.get_new_word();
+        return;
+    }
+
+    if current_char.is_changed() {
+        if current_char.0.is_some() {
             fgtext.sections[0].value.push(current_char.0.unwrap());
         }
     }

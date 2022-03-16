@@ -74,6 +74,18 @@ fn handle_keypress(
         current_key.0 = Some('z');
     }
 
+    // special
+    if input.just_pressed(KeyCode::Minus) {
+        current_key.0 = Some('-');
+    } else if input.just_pressed(KeyCode::Apostrophe) {
+        current_key.0 = Some('\'');
+    }
+
+    // space
+    if input.just_pressed(KeyCode::Space) {
+        current_key.0 = Some(' ');
+    }
+
     // uppercases
     if input.pressed(KeyCode::LShift) || input.pressed(KeyCode::RShift) {
         if input.just_pressed(KeyCode::A) {
