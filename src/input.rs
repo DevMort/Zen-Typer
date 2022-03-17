@@ -79,6 +79,8 @@ fn handle_keypress(
         current_key.0 = Some('-');
     } else if input.just_pressed(KeyCode::Apostrophe) {
         current_key.0 = Some('\'');
+    } else if input.just_pressed(KeyCode::Period) {
+        current_key.0 = Some('.');
     }
 
     // space

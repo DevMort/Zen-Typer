@@ -4,8 +4,8 @@
 As of typing this, I am in the process of learning a new keyboard layout (colemak). And I need a helper program that I can just mindlessly type away while some of my focus is on another thing (like a movie or something).
 
 ** Todo List
-1. Show next word.
-2. Scale font size based on the monitor size.
+[x] 1. Show next word.
+[ ] 2. Scale font size based on the monitor size.
 
 ** Status
 It's a minimum viable product now.
