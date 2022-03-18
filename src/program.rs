@@ -42,7 +42,7 @@ fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>, words: 
                         justify_content: JustifyContent::Center,
                         align_self: AlignSelf::FlexEnd,
                         margin: Rect {
-                            top: Val::Percent(20.0),
+                            top: Val::Percent(15.0),
                             ..Default::default()
                         },
                         ..Default::default()
@@ -137,7 +137,7 @@ fn setup_next_text(
                         justify_content: JustifyContent::Center,
                         align_self: AlignSelf::FlexEnd,
                         margin: Rect {
-                            top: Val::Percent(12.0),
+                            top: Val::Percent(8.0),
                             ..Default::default()
                         },
                         ..Default::default()
@@ -172,18 +172,17 @@ fn handle_char(
     let mut bgtext = q_bgtext.get_single_mut().unwrap();
     let mut nexttext = q_nexttext.get_single_mut().unwrap();
 
-    if fgtext.sections[0].value == bgtext.sections[0].value {
-        fgtext.sections[0].value = String::from("");
-        bgtext.sections[0].value = next_word.0.clone();
-        next_word.0 = words.get_new_word();
-        nexttext.sections[0].value = next_word.0.clone();
+    if current_char.is_changed() && current_char.0.is_some() {
+        fgtext.sections[0].value.push(current_char.0.unwrap());
 
-        return;
-    }
-
-    if current_char.is_changed() {
-        if current_char.0.is_some() {
-            fgtext.sections[0].value.push(current_char.0.unwrap());
+        if fgtext.sections[0].value.trim() == bgtext.sections[0].value.trim()
+            || (current_char.0.unwrap() == ' '
+                && fgtext.sections[0].value.len() > bgtext.sections[0].value.len() / 2)
+        {
+            fgtext.sections[0].value = String::from("");
+            bgtext.sections[0].value = next_word.0.clone();
+            next_word.0 = words.get_new_word();
+            nexttext.sections[0].value = next_word.0.clone();
         }
     }
 }

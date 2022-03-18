@@ -10,7 +10,6 @@ As of typing this, I am in the process of learning a new keyboard layout (colema
 
 [x] 2. Scale font size based on the monitor size.
 
-[ ] 3. Improve input handling.
+[x] 3. Improve input handling.
 
-** Status
-It's a minimum viable product now.
+[ ] 4. Sounds
