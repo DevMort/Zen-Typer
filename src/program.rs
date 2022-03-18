@@ -3,6 +3,7 @@ use bevy::prelude::*;
 use crate::words::Words;
 
 const FONT_PATH: &str = "font.otf";
+const FONT_SIZE_MULTIPLIER: f32 = 0.094;
 
 #[derive(Component)]
 pub struct FgText;
@@ -50,7 +51,7 @@ fn setup_bg_text(mut commands: Commands, asset_server: Res<AssetServer>, words: 
                         words.get_new_word(),
                         TextStyle {
                             font,
-                            font_size: 64.0,
+                            font_size: 128.0,
                             color: Color::SEA_GREEN,
                         },
                         TextAlignment {
@@ -92,7 +93,7 @@ fn setup_fg_text(mut commands: Commands, asset_server: Res<AssetServer>) {
                         "".to_string(),
                         TextStyle {
                             font,
-                            font_size: 64.0,
+                            font_size: 128.0,
                             color: Color::WHITE,
                         },
                         TextAlignment {
@@ -136,7 +137,7 @@ fn setup_next_text(
                         justify_content: JustifyContent::Center,
                         align_self: AlignSelf::FlexEnd,
                         margin: Rect {
-                            top: Val::Percent(15.0),
+                            top: Val::Percent(12.0),
                             ..Default::default()
                         },
                         ..Default::default()
@@ -145,7 +146,7 @@ fn setup_next_text(
                         word,
                         TextStyle {
                             font,
-                            font_size: 50.0,
+                            font_size: 128.0,
                             color: Color::DARK_GRAY,
                         },
                         TextAlignment {
@@ -187,6 +188,25 @@ fn handle_char(
     }
 }
 
+fn handle_window_change(
+    windows: Res<Windows>,
+    mut q_fgtext: Query<&mut Text, With<FgText>>,
+    mut q_bgtext: Query<&mut Text, (With<BgText>, Without<FgText>)>,
+    mut q_nexttext: Query<&mut Text, (With<NextText>, Without<FgText>, Without<BgText>)>,
+) {
+    if windows.is_changed() {
+        let window = windows.get_primary().unwrap();
+
+        let mut fgtext = q_fgtext.get_single_mut().unwrap();
+        let mut bgtext = q_bgtext.get_single_mut().unwrap();
+        let mut nexttext = q_nexttext.get_single_mut().unwrap();
+
+        fgtext.sections[0].style.font_size = window.width() * FONT_SIZE_MULTIPLIER;
+        bgtext.sections[0].style.font_size = window.width() * FONT_SIZE_MULTIPLIER;
+        nexttext.sections[0].style.font_size = window.width() * FONT_SIZE_MULTIPLIER;
+    }
+}
+
 pub struct ProgramPlugin;
 impl Plugin for ProgramPlugin {
     fn build(&self, app: &mut App) {
@@ -196,6 +216,7 @@ impl Plugin for ProgramPlugin {
             .add_startup_system(setup_bg_text)
             .add_startup_system(setup_fg_text)
             .add_startup_system(setup_next_text)
-            .add_system(handle_char);
+            .add_system(handle_char)
+            .add_system(handle_window_change);
     }
 }

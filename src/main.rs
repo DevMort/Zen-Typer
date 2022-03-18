@@ -11,9 +11,9 @@ fn main() {
     App::new()
         .insert_resource(WindowDescriptor {
             title: "Zen Typer".to_string(),
-            mode: bevy::window::WindowMode::Fullscreen,
+            width: 840.0,
+            height: 600.0,
             vsync: true,
-            resizable: false,
             ..Default::default()
         })
         .insert_resource(Words::new())

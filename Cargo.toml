@@ -8,12 +8,16 @@ rand = '0.8.5'
 
 [dependencies.bevy]
 version = '0.6.1'
-default_features = false
+default-features = false
 features = [
   "filesystem_watcher", # Asset hot-reloading
   "bevy_winit",         # Window management
   "x11",                # Linux: Support X11 windowing system
-  "render",
+  "bevy_render",        # Rendering framework core
+  "bevy_core_pipeline", # Higher-level rendering abstractions
+  "bevy_sprite",        # 2D (sprites) rendering
+  "bevy_text",          # Text/font rendering
+  "bevy_ui",            # UI toolkit
   "subpixel_glyph_atlas", # Subpixel antialiasing for text/fonts
   "dynamic",      # Dynamic linking for faster compile-times
 ]
