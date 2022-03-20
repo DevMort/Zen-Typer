@@ -1,4 +1,3 @@
-use bevy::prelude::*;
 use rand::{thread_rng, Rng};
 use std::fs::read_to_string;
 
@@ -28,12 +27,5 @@ impl Words {
             .get(rng.gen_range(0..self.0.len()))
             .unwrap()
             .to_string()
-    }
-}
-
-pub struct WordPlugin;
-impl Plugin for WordPlugin {
-    fn build(&self, app: &mut App) {
-        //
     }
 }

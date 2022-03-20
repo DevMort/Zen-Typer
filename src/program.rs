@@ -1,6 +1,5 @@
-use bevy::prelude::*;
-
 use crate::words::Words;
+use bevy::{prelude::*, window::WindowResized};
 
 const FONT_PATH: &str = "font.otf";
 const FONT_SIZE_MULTIPLIER: f32 = 0.094;
@@ -168,11 +167,13 @@ fn handle_char(
     words: Res<Words>,
     mut next_word: ResMut<NextWord>,
 ) {
-    let mut fgtext = q_fgtext.get_single_mut().unwrap();
-    let mut bgtext = q_bgtext.get_single_mut().unwrap();
-    let mut nexttext = q_nexttext.get_single_mut().unwrap();
-
     if current_char.is_changed() && current_char.0.is_some() {
+        println!("handling char");
+
+        let mut fgtext = q_fgtext.get_single_mut().unwrap();
+        let mut bgtext = q_bgtext.get_single_mut().unwrap();
+        let mut nexttext = q_nexttext.get_single_mut().unwrap();
+
         fgtext.sections[0].value.push(current_char.0.unwrap());
 
         if fgtext.sections[0].value.trim() == bgtext.sections[0].value.trim()
@@ -189,11 +190,14 @@ fn handle_char(
 
 fn handle_window_change(
     windows: Res<Windows>,
+    mut window_evr: EventReader<WindowResized>,
     mut q_fgtext: Query<&mut Text, With<FgText>>,
     mut q_bgtext: Query<&mut Text, (With<BgText>, Without<FgText>)>,
     mut q_nexttext: Query<&mut Text, (With<NextText>, Without<FgText>, Without<BgText>)>,
 ) {
-    if windows.is_changed() {
+    for _ in window_evr.iter() {
+        println!("handling window change");
+
         let window = windows.get_primary().unwrap();
 
         let mut fgtext = q_fgtext.get_single_mut().unwrap();

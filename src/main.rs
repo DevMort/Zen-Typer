@@ -3,7 +3,7 @@ mod program;
 mod words;
 
 use crate::input::InputPlugin;
-use crate::words::{WordPlugin, Words};
+use crate::words::Words;
 use bevy::prelude::*;
 use program::ProgramPlugin;
 
@@ -13,12 +13,10 @@ fn main() {
             title: "Zen Typer".to_string(),
             width: 840.0,
             height: 600.0,
-            vsync: true,
             ..Default::default()
         })
         .insert_resource(Words::new())
         .add_plugin(ProgramPlugin)
-        .add_plugin(WordPlugin)
         .add_plugin(InputPlugin)
         .add_plugins(DefaultPlugins)
         .run();

@@ -12,6 +12,6 @@ As of typing this, I am in the process of learning a new keyboard layout (colema
 
 [ x ] 3. Improve input handling.
 
-[  ] 4. Improve performance. Right now it's at 20% cpu...
+[ x ] 4. Improve performance.
 
 [  ] 5. Sounds
