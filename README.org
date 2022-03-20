@@ -6,10 +6,12 @@
 As of typing this, I am in the process of learning a new keyboard layout (colemak). And I need a helper program that I can just mindlessly type away while some of my focus is on another thing (like a movie or something).
 
 ** Todo List
-[x] 1. Show next word.
+[ x ] 1. Show next word.
 
-[x] 2. Scale font size based on the monitor size.
+[ x ] 2. Scale font size based on the monitor size.
 
-[x] 3. Improve input handling.
+[ x ] 3. Improve input handling.
 
-[ ] 4. Sounds
+[  ] 4. Improve performance. Right now it's at 20% cpu...
+
+[  ] 5. Sounds
