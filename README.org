@@ -14,4 +14,4 @@ As of typing this, I am in the process of learning a new keyboard layout (colema
 
 [ x ] 4. Improve performance.
 
-[  ] 5. Sounds
+[ x ] 5. Sounds

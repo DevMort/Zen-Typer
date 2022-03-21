@@ -197,8 +197,6 @@ fn handle_window_change(
     mut q_nexttext: Query<&mut Text, (With<NextText>, Without<FgText>, Without<BgText>)>,
 ) {
     for _ in window_evr.iter() {
-        println!("handling window change");
-
         let window = windows.get_primary().unwrap();
 
         let mut fgtext = q_fgtext.get_single_mut().unwrap();
