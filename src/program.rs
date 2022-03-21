@@ -1,4 +1,4 @@
-use crate::words::Words;
+use crate::{sfx::ClickEvent, words::Words};
 use bevy::{prelude::*, window::WindowResized};
 
 const FONT_PATH: &str = "font.otf";
@@ -166,9 +166,10 @@ fn handle_char(
     mut q_nexttext: Query<&mut Text, (With<NextText>, Without<FgText>, Without<BgText>)>,
     words: Res<Words>,
     mut next_word: ResMut<NextWord>,
+    mut ev_click: EventWriter<ClickEvent>,
 ) {
     if current_char.is_changed() && current_char.0.is_some() {
-        println!("handling char");
+        ev_click.send(ClickEvent);
 
         let mut fgtext = q_fgtext.get_single_mut().unwrap();
         let mut bgtext = q_bgtext.get_single_mut().unwrap();

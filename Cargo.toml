@@ -19,5 +19,13 @@ features = [
   "bevy_text",          # Text/font rendering
   "bevy_ui",            # UI toolkit
   "subpixel_glyph_atlas", # Subpixel antialiasing for text/fonts
+  "wav",
   "dynamic",      # Dynamic linking for faster compile-times
+]
+
+[dependencies.bevy_kira_audio]
+version = "0.8.0"
+default-features = false
+features = [
+  "wav",
 ]

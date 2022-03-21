@@ -22,7 +22,6 @@ fn handle_keypress(
         if input.is_changed()
             && (ev.char.is_ascii_alphabetic() || ev.char.is_ascii_graphic() || ev.char == ' ')
         {
-            println!("handling keypress");
             current_key.0 = Some(ev.char);
         }
     }
